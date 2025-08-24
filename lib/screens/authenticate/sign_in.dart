@@ -10,9 +10,11 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final _key=GlobalKey<FormState>();
   final AuthService _auth = AuthService();
-  String username='';
-  String password='';
+  String username = '';
+  String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class _SignInState extends State<SignIn> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
         child: Form(
+          key: _key,
           child: Column(
             children: [
               SizedBox(height: 20),
@@ -51,6 +54,7 @@ class _SignInState extends State<SignIn> {
                     username=val;
                   });
                 },
+                validator: (val)=> val!.isEmpty? "Enter the Email":null,
                 decoration: InputDecoration(hintText: "Username",fillColor: Colors.white,
                     filled: true,
                     enabledBorder: OutlineInputBorder(
@@ -67,6 +71,7 @@ class _SignInState extends State<SignIn> {
                     password=val;
                   });
                 },
+                validator: (val)=> val!.length<6? "Enter the Password 6 char long":null,
                 decoration: InputDecoration(hintText: "Password",fillColor: Colors.white,
                     filled: true,
                     enabledBorder: OutlineInputBorder(
@@ -80,15 +85,25 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 20),
 
               ElevatedButton(
-                onPressed: () async{
-                  print(username);
-                  print(password);
+                onPressed: () async {
+                  if(_key.currentState!.validate()){
+                    dynamic result= await _auth.signWithEmailAndPassword(username, password);
+                    if(result==null){
+                      setState(() {
+                        error="INVALID CREDENTIAL";
+                      });
+                    }
+                  }
+
                 },
-                child: Text("Sign In",style: TextStyle(color: Colors.white),),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.brown.shade400,
                 ),
+                child: Text("Sign In",style: TextStyle(color: Colors.white),),
               ),
+              Text(error,style: TextStyle(
+                color: Colors.red
+              ),)
             ],
           ),
         ),

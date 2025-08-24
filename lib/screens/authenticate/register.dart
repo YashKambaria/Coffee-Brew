@@ -59,7 +59,7 @@ class _RegisterState extends State<Register> {
                   });
                 },
                 decoration: InputDecoration(
-                  hintText: "Username",
+                  hintText: "Email",
                   fillColor: Colors.white,
                   filled: true,
                   enabledBorder: OutlineInputBorder(
