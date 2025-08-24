@@ -12,10 +12,11 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  // final _key=Key
+  final _key=GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   String username = '';
   String password = '';
+  String error = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,10 +47,12 @@ class _RegisterState extends State<Register> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
         child: Form(
+          key: _key,
           child: Column(
             children: [
               SizedBox(height: 20),
               TextFormField(
+                validator: (val)=> val!.isEmpty? "Enter the Email":null,
                 onChanged: (val) {
                   setState(() {
                     username = val;
@@ -69,6 +72,7 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20),
               TextFormField(
+                validator: (val)=> val!.length<6? "Enter the Password 6 char long":null,
                 onChanged: (val) {
                   setState(() {
                     password = val;
@@ -91,23 +95,24 @@ class _RegisterState extends State<Register> {
 
               ElevatedButton(
                 onPressed: () async {
-                  print(username);
-                  print(password);
+                  if(_key.currentState!.validate()){
+                   dynamic result= await _auth.registerWithEmailAndPassword(username, password);
+                   if(result==null){
+                     setState(() {
+                       error="please supply a valid email";
+                     });
+                   }
+                  }
+
                 },
                 child: Text("Register", style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.brown.shade400,
                 ),
               ),
-              // ElevatedButton(
-              //   onPressed: () async{
-              //     Navigator.pushReplacement((context), SignIn() as Route<Object?>);
-              //   },
-              //   child: Text("Already Register? Sign Up",style: TextStyle(color: Colors.white),),
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: Colors.brown.shade400,
-              //   ),
-              // ),
+              Text(error,style: TextStyle(
+                color: Colors.red,
+              ),)
             ],
           ),
         ),
