@@ -1,25 +1,26 @@
-import 'package:coffee_brew/services/auth_service.dart';
+import 'package:coffee_brew/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+import '../../services/auth_service.dart';
+
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   String username='';
   String password='';
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       backgroundColor: Colors.brown.shade200,
       appBar: AppBar(
         title: Text(
-          "Sign In to Coffee Brew",
+          "Welcome to Coffee Brew",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -56,11 +57,20 @@ class _SignInState extends State<SignIn> {
                   print(username);
                   print(password);
                 },
-                child: Text("Sign In",style: TextStyle(color: Colors.white),),
+                child: Text("Register",style: TextStyle(color: Colors.white),),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.brown.shade400,
                 ),
               ),
+              // ElevatedButton(
+              //   onPressed: () async{
+              //     Navigator.pushReplacement((context), SignIn() as Route<Object?>);
+              //   },
+              //   child: Text("Already Register? Sign Up",style: TextStyle(color: Colors.white),),
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: Colors.brown.shade400,
+              //   ),
+              // ),
             ],
           ),
         ),
