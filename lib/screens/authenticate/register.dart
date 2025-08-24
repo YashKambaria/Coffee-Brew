@@ -4,26 +4,43 @@ import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
 
 class Register extends StatefulWidget {
-  const Register({super.key});
+  final Function toggle;
+  const Register({super.key, required this.toggle});
 
   @override
   State<Register> createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
+  // final _key=Key
   final AuthService _auth = AuthService();
-  String username='';
-  String password='';
+  String username = '';
+  String password = '';
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.brown.shade200,
       appBar: AppBar(
         title: Text(
           "Welcome to Coffee Brew",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              widget.toggle();
+            },
+            child: Row(
+              children: [
+                Icon(Icons.person, size: 30, color: Colors.black),
+                Text(
+                  "Sign In",
+                  style: TextStyle(color: Colors.black, fontSize: 15),
+                ),
+              ],
+            ),
+          ),
+        ],
         backgroundColor: Colors.brown.shade400,
       ),
       body: Container(
@@ -35,29 +52,49 @@ class _RegisterState extends State<Register> {
               TextFormField(
                 onChanged: (val) {
                   setState(() {
-                    username=val;
+                    username = val;
                   });
                 },
-                decoration: InputDecoration(hintText: "Username"),
+                decoration: InputDecoration(
+                  hintText: "Username",
+                  fillColor: Colors.white,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.pink, width: 2),
+                  ),
+                ),
               ),
               SizedBox(height: 20),
               TextFormField(
                 onChanged: (val) {
                   setState(() {
-                    password=val;
+                    password = val;
                   });
                 },
-                decoration: InputDecoration(hintText: "Password"),
+                decoration: InputDecoration(
+                  hintText: "Password",
+                  fillColor: Colors.white,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.pink, width: 2),
+                  ),
+                ),
                 obscureText: true,
               ),
               SizedBox(height: 20),
 
               ElevatedButton(
-                onPressed: () async{
+                onPressed: () async {
                   print(username);
                   print(password);
                 },
-                child: Text("Register",style: TextStyle(color: Colors.white),),
+                child: Text("Register", style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.brown.shade400,
                 ),
