@@ -1,19 +1,22 @@
-# --- Ignore Build System & Generated Files ---
-*.cmake linguist-vendored
-CMakeLists.txt linguist-vendored
-*.cpp linguist-vendored
-*.c linguist-vendored
-*.h linguist-vendored
+# Ignore vendored / generated directories
+node_modules/** linguist-vendored
+vendor/** linguist-vendored
+build/** linguist-vendored
+dist/** linguist-vendored
+target/** linguist-vendored
+out/** linguist-vendored
 
-# Ignore gradle/podspec/plist/build config files
-*.gradle linguist-vendored
-*.podspec linguist-vendored
-*.plist linguist-vendored
-*.xml linguist-vendored
+# Ignore notebooks and generated files
+*.ipynb linguist-generated
+*.json linguist-generated
+*.lock linguist-generated
 
-# --- Keep actual app languages visible ---
-*.dart linguist-detectable=true
-*.swift linguist-detectable=true
-*.java linguist-detectable=true
-*.kt linguist-detectable=true
-*.html linguist-detectable=true
+# Ignore binaries
+*.jar linguist-generated
+*.class linguist-generated
+*.exe linguist-generated
+*.dll linguist-generated
+*.so linguist-generated
+
+# Force Java detection
+*.java linguist-language=Java
